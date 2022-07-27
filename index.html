@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PublicBoard Spreadsheet Test using Tabletop.js</title>
+    <meta charset="utf-8"/>
+
+    <style>
+        .center {
+            /*border: 5px solid #FFFF00;*/
+            display: flex;
+            justify-content: center;
+            color: whitesmoke;
+            padding-right: 10%;
+            padding-left: 10%;
+        }
+
+        body {
+            background-color: #0a0a3e;
+            color: whitesmoke;
+        }
+
+
+        .grid-container {
+            padding: 3.75%;
+            display: grid;
+            grid-template-columns: 100%;
+            grid-column-gap: 0;
+            grid-row-gap: 20px;
+        }
+
+        .grid-container > div {
+            background-color: RoyalBlue;
+            /*padding: 10px;*/
+        }
+
+        .grid-container > div:nth-child(3n + 2) {
+            background-color: DodgerBlue;
+        }
+
+        .grid-container > div:nth-child(3n) {
+            background-color: DeepSkyBlue;
+        }
+
+        @media only screen and (min-width: 640px) {
+            .grid-container {
+                grid-template-columns: 47.5% 47.5%;
+                grid-column-gap: 5%;
+                grid-row-gap: 20px;
+            }
+
+            .grid-container > div {
+                padding: 30px;
+            }
+        }
+
+        @media only screen and (min-width: 981px) {
+            .grid-container {
+                grid-template-columns: 32% 32% 32%;
+                /*grid-column-gap: 5%;*/
+                grid-row-gap: 20px;
+                grid-column-gap: 14px;
+            }
+
+            .grid-container > div {
+                /*padding: 5px;*/
+            }
+        }
+
+
+        /*---------------------------------------------------------------*/
+        /*---------------------Load CSS below----------------------------*/
+        /*---------------------------------------------------------------*/
+
+        /* Center the loader */
+        #loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 120px;
+            height: 120px;
+            margin: -76px 0 0 -76px;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid rgba(255, 191, 0, 0.8);
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Add animation to "page content" */
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0px;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        #myDiv {
+            display: none;
+            text-align: center;
+        }
+    </style>
+
+    <script type='text/javascript'>
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+<div class="center">
+    <h1>Drakbåts SM 2022</h1>
+</div>
+<div class="center">
+    <h4>Den 30-31 juli samlas Sveriges bästa Drakbåtkanotiser för att utmana varandra i drakbåts SM 2022!<P/> En tävling
+        som pågår går på i Jönköping i Rocksjön på Jönköpings Energi Arena!
+    </h4>
+</div>
+
+<div class="center">
+    <div id="loader">
+    </div>
+</div>
+
+<div style="display:none;" id="myDiv" class="animate-bottom">
+    <div class="center">
+        <h2>Startlista</h2>
+    </div>
+
+
+    <div class="center">
+        <p id="placeringar"></p>
+    </div>
+
+    <div class="center">
+        <h2>Start/resultat listor</h2>
+    </div>
+
+    <div class="center">
+        <div class="grid-container"></div>
+    </div>
+</div>
+
+
+<script>
+
+    getAndDisplayData()
+
+    function getAndDisplayData() {
+        fetch('https://script.googleusercontent.com/a/macros/drakbatslandslaget.se/echo?user_content_key=2Oc7siHCXaizIQ7GAMwg-qDB5YwqsI91tnx7t0h8nLvg-nWRD7iRS58IVouv0hjTCvXnTZLnXfHLzzn-ywTRGR_dvWyd6R0fOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKC4XXoRycefbuMA4o5UrXTyMdGZwidgSKtLhyHCd5hHa4i7WDRyZiPk-FeXWrDGVEeEplP9UkVWRF0W4GWcp7WxHWPLq7hJ6q1EMmusJ71dOErSdR1t_zwEqPvb08Ssnc97US-osCcjfpqBASd6hfbB&lib=Mk1i_-N1_WDsC2x7pvxo0rmFx6WScVXiR')
+            .then(result => result.json())
+            .then(result => result.data)
+            //.then(result => result.data.scores.sort((a, b) => (a.place - b.place || a.name.localeCompare(b.name)) ))
+            .then((data) => {
+                console.log(data)
+                CreateStartListTableFromJson(data, "placeringar")
+
+                createResultStartlistBlock(data, "startResultat")
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("myDiv").style.display = "block";
+            })
+    }
+
+    function createResultStartlistBlock(startResult) {
+        var box = document.querySelector('div.grid-container');
+        startResult.map(race => {
+            var raceBox = document.createElement("div");
+            raceBox.className = "grid-item";
+            //var raceBox = document.querySelector('div.grid-item');
+            console.log(race)
+            var h1 = document.createElement('h3');
+            h1.appendChild(document.createTextNode(race.loppInfo));
+            raceBox.appendChild(h1)
+            console.log(race.banor)
+            raceBox.appendChild(createTable(race.banor))
+            box.appendChild(raceBox);
+        })
+
+
+    }
+
+    function CreateStartListTableFromJson(json, id) {
+        var divContainer = document.getElementById(id);
+        divContainer.innerHTML = "";
+        divContainer.appendChild(createStartListTable(json));
+    }
+
+    function createStartListTable(json) {
+        // EXTRACT VALUE FOR HTML HEADER.
+        var col = ["Lopp", "Tid", "Info"];
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < json.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            var tabCell1 = tr.insertCell(-1);
+            tabCell1.innerHTML = json[i].loppInfo.split("-")[0];
+
+            var tabCell2 = tr.insertCell(-1);
+            tabCell2.innerHTML = json[i].loppInfo.split("-")[1];
+
+            var tabCell3 = tr.insertCell(-1);
+            tabCell3.innerHTML = json[i].loppInfo.split("-")[2] + " - " + json[i].loppInfo.split("-")[3];
+
+        }
+
+        return table
+
+    }
+
+    function CreateTableFromJsonToContainer(json, id) {
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById(id);
+        divContainer.innerHTML = "";
+        divContainer.appendChild(createTable(json));
+    }
+
+    function createTable(json) {
+        // EXTRACT VALUE FOR HTML HEADER.
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        var col = [];
+        for (var i = 0; i < json.length; i++) {
+            for (var key in json[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < json.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = json[i][col[j]];
+            }
+        }
+
+        return table
+
+    }
+</script>
+</body>

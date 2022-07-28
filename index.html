@@ -26,7 +26,7 @@
             display: grid;
             grid-template-columns: 100%;
             grid-column-gap: 0;
-            grid-row-gap: 20px;
+            grid-row-gap: 1.25rem;
         }
 
         .grid-container > div {
@@ -42,24 +42,24 @@
             background-color: DeepSkyBlue;
         }
 
-        @media only screen and (min-width: 640px) {
+        @media only screen and (min-width: 40rƒ) {
             .grid-container {
                 grid-template-columns: 47.5% 47.5%;
                 grid-column-gap: 5%;
-                grid-row-gap: 20px;
+                grid-row-gap: 1.25rem;
             }
 
             .grid-container > div {
-                padding: 30px;
+                padding: 1.875rem;
             }
         }
 
-        @media only screen and (min-width: 981px) {
+        @media only screen and (min-width: 61.3125rem) {
             .grid-container {
                 grid-template-columns: 32% 32% 32%;
                 /*grid-column-gap: 5%;*/
-                grid-row-gap: 20px;
-                grid-column-gap: 14px;
+                grid-row-gap: 1.25rem;
+                grid-column-gap: 0.875rem;
             }
 
             .grid-container > div {
@@ -78,12 +78,12 @@
             left: 50%;
             top: 50%;
             z-index: 1;
-            width: 120px;
-            height: 120px;
-            margin: -76px 0 0 -76px;
-            border: 16px solid #f3f3f3;
+            width: 7.5rem;
+            height: 7.5rem;
+            margin: -4.75rem 0 0 -4.75rem;
+            border: 1rem solid #f3f3f3;
             border-radius: 50%;
-            border-top: 16px solid rgba(255, 191, 0, 0.8);
+            border-top: 1rem solid rgba(255, 191, 0, 0.8);
             -webkit-animation: spin 2s linear infinite;
             animation: spin 2s linear infinite;
         }
@@ -119,19 +119,19 @@
 
         @-webkit-keyframes animatebottom {
             from {
-                bottom: -100px;
+                bottom: -6.25rem;
                 opacity: 0
             }
 
             to {
-                bottom: 0px;
+                bottom: 0rem;
                 opacity: 1
             }
         }
 
         @keyframes animatebottom {
             from {
-                bottom: -100px;
+                bottom: -6.25rem;
                 opacity: 0
             }
 

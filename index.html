@@ -202,7 +202,7 @@
             .then(result => result.data)
             //.then(result => result.data.scores.sort((a, b) => (a.place - b.place || a.name.localeCompare(b.name)) ))
             .then((data) => {
-                console.log(data)
+                //console.log(data)
                 CreateStartListTableFromJson(data, "placeringar")
 
                 createResultStartlistBlock(data, "startResultat")
@@ -217,11 +217,11 @@
             var raceBox = document.createElement("div");
             raceBox.className = "grid-item";
             //var raceBox = document.querySelector('div.grid-item');
-            console.log(race)
+            //console.log(race)
             var h1 = document.createElement('h3');
             h1.appendChild(document.createTextNode(race.loppInfo));
             raceBox.appendChild(h1)
-            console.log(race.banor)
+            //console.log(race.banor)
             raceBox.appendChild(createRaceTable(race.banor))
             box.appendChild(raceBox);
         })
@@ -257,15 +257,27 @@
 
             tr = table.insertRow(-1);
 
-            var tabCell1 = tr.insertCell(-1);
-            tabCell1.innerHTML = json[i].loppInfo.split("-")[0];
+            var hederParts = json[i].loppInfo.split("-")
 
-            var tabCell2 = tr.insertCell(-1);
-            tabCell2.innerHTML = json[i].loppInfo.split("-")[1];
+            if (hederParts.length === 1) {
+                var tabCell1 = tr.insertCell(-1);
+                tabCell1.innerHTML = "";
 
-            var tabCell3 = tr.insertCell(-1);
-            tabCell3.innerHTML = json[i].loppInfo.split("-")[2] + " - " + json[i].loppInfo.split("-")[3];
+                var tabCell2 = tr.insertCell(-1);
+                tabCell2.innerHTML = ""
 
+                var tabCell3 = tr.insertCell(-1);
+                tabCell3.innerHTML = json[i].loppInfo;
+            } else {
+                var tabCell1 = tr.insertCell(-1);
+                tabCell1.innerHTML = hederParts[0];
+
+                var tabCell2 = tr.insertCell(-1);
+                tabCell2.innerHTML = hederParts[1];
+
+                var tabCell3 = tr.insertCell(-1);
+                tabCell3.innerHTML = hederParts[2] + " - " + hederParts[3];
+            }
         }
 
         return table
@@ -275,6 +287,8 @@
     function createRaceTable(json) {
         // EXTRACT VALUE FOR HTML HEADER.
         var col = ["Bana", "Klubb", "Tid", "Placering"];
+        if (json.length === 0) //don't show the heder if there is no data to display
+            col = []
 
         // CREATE DYNAMIC TABLE.
         var table = document.createElement("table");

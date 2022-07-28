@@ -216,12 +216,17 @@
         startResult.map(race => {
             var raceBox = document.createElement("div");
             raceBox.className = "grid-item";
-            //var raceBox = document.querySelector('div.grid-item');
-            //console.log(race)
             var h1 = document.createElement('h3');
-            h1.appendChild(document.createTextNode(race.loppInfo));
+            var heders = []
+            if(race.loppnummer)
+                heders.push(("Lopp " + race.loppnummer))
+            if(race.loppTid)
+                heders.push(race.loppTid)
+            if(race.loppInfo)
+                heders.push(race.loppInfo)
+
+            h1.appendChild(document.createTextNode(heders.join(" - ")));
             raceBox.appendChild(h1)
-            //console.log(race.banor)
             raceBox.appendChild(createRaceTable(race.banor))
             box.appendChild(raceBox);
         })
@@ -257,27 +262,14 @@
 
             tr = table.insertRow(-1);
 
-            var hederParts = json[i].loppInfo.split("-")
+            var tabCell1 = tr.insertCell(-1);
+            tabCell1.innerHTML = json[i].loppnummer ? json[i].loppnummer : "";
 
-            if (hederParts.length === 1) {
-                var tabCell1 = tr.insertCell(-1);
-                tabCell1.innerHTML = "";
+            var tabCell2 = tr.insertCell(-1);
+            tabCell2.innerHTML = json[i].loppTid ? json[i].loppTid : "";
 
-                var tabCell2 = tr.insertCell(-1);
-                tabCell2.innerHTML = ""
-
-                var tabCell3 = tr.insertCell(-1);
-                tabCell3.innerHTML = json[i].loppInfo;
-            } else {
-                var tabCell1 = tr.insertCell(-1);
-                tabCell1.innerHTML = hederParts[0];
-
-                var tabCell2 = tr.insertCell(-1);
-                tabCell2.innerHTML = hederParts[1];
-
-                var tabCell3 = tr.insertCell(-1);
-                tabCell3.innerHTML = hederParts[2] + " - " + hederParts[3];
-            }
+            var tabCell3 = tr.insertCell(-1);
+            tabCell3.innerHTML = json[i].loppInfo ? json[i].loppInfo : "";
         }
 
         return table

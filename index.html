@@ -221,7 +221,7 @@
             h1.appendChild(document.createTextNode(race.loppInfo));
             raceBox.appendChild(h1)
             console.log(race.banor)
-            raceBox.appendChild(createTable(race.banor))
+            raceBox.appendChild(createRaceTable(race.banor))
             box.appendChild(raceBox);
         })
 
@@ -265,6 +265,45 @@
             var tabCell3 = tr.insertCell(-1);
             tabCell3.innerHTML = json[i].loppInfo.split("-")[2] + " - " + json[i].loppInfo.split("-")[3];
 
+        }
+
+        return table
+
+    }
+
+    function createRaceTable(json) {
+        // EXTRACT VALUE FOR HTML HEADER.
+        var col = ["Bana", "Klubb", "Tid", "Placering"];
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < json.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            var tabCell1 = tr.insertCell(-1);
+            tabCell1.innerHTML = json[i].bana;
+
+            var tabCell2 = tr.insertCell(-1);
+            tabCell2.innerHTML = json[i].namn;
+
+            var tabCell3 = tr.insertCell(-1);
+            tabCell3.innerHTML = json[i].tid;
+
+            var tabCell4 = tr.insertCell(-1);
+            tabCell4.innerHTML = json[i].placering;
         }
 
         return table

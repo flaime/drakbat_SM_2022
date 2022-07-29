@@ -165,8 +165,9 @@
     <h3>Jönköpings Energi Arena, Rocksjön</h3>
 </div>
 <div class="center">
-    <h4>Välkomna till den officiella hemsidan för alla start/resultat-listor för drakbåts SM 2022.<p/> 
-        Här kan man hitta all övrig information om tävlingen: <a href="https://www.facebook.com/resultatdbsm/">Drakbåt SM Facebook</a> 
+    <h4>Välkomna till den officiella hemsidan för alla start/resultat-listor för drakbåts SM 2022.<p/>
+        Här kan man hitta all övrig information om tävlingen: <a href="https://www.facebook.com/resultatdbsm/">Drakbåt
+            SM Facebook</a>
     </h4>
 </div>
 
@@ -191,6 +192,13 @@
 
     <div class="center">
         <div class="grid-container"></div>
+    </div>
+
+    <div class="center">
+        <p>
+            Kortlopp: Open/dam, de två bästa tiderna av tre lopp räknas till totalen som avgör vinnaren. Mix, vinnaren av
+            försöken går direkt till final, resten till mellanheat. Från mellanheaten går 3 båtar vidare till final.
+        </p>
     </div>
 </div>
 
@@ -224,11 +232,11 @@
             raceBox.className = "grid-item";
             var h1 = document.createElement('h3');
             var heders = []
-            if(race.loppnummer)
-                heders.push(("Lopp " + race.loppnummer))
-            if(race.loppTid)
+            if (race.loppnummer)
+                heders.push(( isFinite(race.loppnummer) ? ("Lopp " + race.loppnummer) : race.loppnummer))
+            if (race.loppTid)
                 heders.push(race.loppTid)
-            if(race.loppInfo)
+            if (race.loppInfo)
                 heders.push(race.loppInfo)
 
             h1.appendChild(document.createTextNode(heders.join(" - ")));

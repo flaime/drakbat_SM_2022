@@ -196,8 +196,7 @@
 
     <div class="center">
         <p>
-            Kortlopp: Open/dam, de två bästa tiderna av tre lopp räknas till totalen som avgör vinnaren. Mix, vinnaren av
-            försöken går direkt till final, resten till mellanheat. Från mellanheaten går 3 båtar vidare till final.
+            Vid färre än 6 lag: Två lopp där båda tiderna räknas till totalen som avgör vinnaren. Vid 6 lag eller fel: Vinnaren av försöken går direkt till final, resten till mellanheat. Från mellanheaten går 3 båtar vidare till final.
         </p>
     </div>
 </div>
@@ -211,7 +210,7 @@
     getAndDisplayData()
 
     function getAndDisplayData() {
-        fetch('https://script.googleusercontent.com/a/macros/drakbatslandslaget.se/echo?user_content_key=2Oc7siHCXaizIQ7GAMwg-qDB5YwqsI91tnx7t0h8nLvg-nWRD7iRS58IVouv0hjTCvXnTZLnXfHLzzn-ywTRGR_dvWyd6R0fOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKC4XXoRycefbuMA4o5UrXTyMdGZwidgSKtLhyHCd5hHa4i7WDRyZiPk-FeXWrDGVEeEplP9UkVWRF0W4GWcp7WxHWPLq7hJ6q1EMmusJ71dOErSdR1t_zwEqPvb08Ssnc97US-osCcjfpqBASd6hfbB&lib=Mk1i_-N1_WDsC2x7pvxo0rmFx6WScVXiR')
+        fetch('https://script.googleusercontent.com/a/macros/drakbatslandslaget.se/echo?user_content_key=B-peA7m_xqByAjMqOTXGWdTkzjXQz9z94H6uTgohQZc3xGWcVtC4ss_6MTpr2Pl7GlKxVMNG1CpVn8pszRZLI8hAcLZSLRcSOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKC4XXoRycefbuMA4o5UrXTyMdGZwidgSKtLhyHCd5hHayAs0y1hvN1V1-q-NOqS9oO9Zw_XAR0GF_nfqYc9ipWGggkwgJY3sYuywEA2Y53QVU0iLPXWNWdlLTvVHa578XEDynFSDancgg&lib=MI1MflFJSMKI6lDfch9W3KJGS7CWxxh_e')
             .then(result => result.json())
             .then(result => result.data)
             //.then(result => result.data.scores.sort((a, b) => (a.place - b.place || a.name.localeCompare(b.name)) ))
